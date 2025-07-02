@@ -1,0 +1,9 @@
+URL: https://ycmlubeulbufsfrvbmal.supabase.co
+Pass: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InljbWx1YmV1bGJ1ZnNmcnZibWFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExMDUwMjYsImV4cCI6MjA2NjY4MTAyNn0.huBZHp-BKJyXEp6MyZAHx4tWpgSjs5zLcirznn3MeNI
+
+
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = 'https://ycmlubeulbufsfrvbmal.supabase.co'
+const supabaseKey = process.env.SUPABASE_KEY
+const supabase = createClient(supabaseUrl, supabaseKey)
