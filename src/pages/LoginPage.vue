@@ -102,8 +102,6 @@ ReadApp
 
 
 
-
-
 </q-page>
 </q-page-container>
 </q-layout>
@@ -149,12 +147,6 @@ router.push('/');
 systemError.value='Invalid user credentials';
 }
 
-
-
-
-// console.log(user);
-
-
 }
 
 
@@ -167,12 +159,7 @@ view.value=option;
 }
 
 
-
-
-
-
 const systemError2=ref(null);
-
 const form2=reactive({
 fname:'kato',
 lname:'joshua',
@@ -195,6 +182,7 @@ errors2.email='';
 errors2.password='';
 errors2.fname='';
 errors2.lname='';
+
 if(form2.email=='' || form2.password=='' || form2.lname=='' || form2.fname==''){
 form2.email==''?errors2.email='Email is required':null;
 form2.password==''?errors2.password='Password is required':null;
@@ -212,7 +200,6 @@ dob:'none',
 class:'none',
 school:'none',
 tel:'none'
-
 }}
 });
 
