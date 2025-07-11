@@ -4,6 +4,7 @@
 <q-page>
 
 
+
 <div v-if="view=='login'">
 <form @submit.prevent="submit">
 <div style="text-align:center;padding:50px;">
@@ -111,6 +112,7 @@ import { reactive,ref } from 'vue';
 import database from 'src/boot/database';
 import InputError from 'src/components/InputError.vue';
 import { useRouter } from 'vue-router';
+import { LocalStorage } from 'quasar';
 
 
 const systemError=ref(null);
@@ -122,13 +124,10 @@ password:'09/u/2252'
 });
 
 
-
 const errors=reactive({
 email:'',
 password:''
 });
-
-
 
 const router=useRouter();
 const submit= async ()=>{
@@ -142,6 +141,7 @@ return;
 const user=await database.
 auth.signInWithPassword({email:form.email,password:form.password});
 if(user.error==null){
+LocalStorage.set('user',user.data.user.user_metadata);
 router.push('/');
 }else{
 systemError.value='Invalid user credentials';
@@ -209,7 +209,8 @@ if(user.data){
 const login=await database.
 auth.signInWithPassword({email:form2.email,password:form2.password});
 if(login.error==null){
-router.push('/create-profile');
+  LocalStorage.set('user',user.data.user.user_metadata);
+router.push('/');
 }else{
 console.log(login.error);
 }

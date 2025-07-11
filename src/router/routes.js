@@ -23,7 +23,7 @@ name:'index',
 meta:{ requiresAuth: true }
 },
 {path:'/search',
-component: ()=>import('src/pages/Search.vue'),
+component: ()=>import('src/pages/SearchPage.vue'),
 name:'search',
 meta:{ requiresAuth: true }
 },
@@ -88,6 +88,12 @@ meta:{ requiresAuth: true }
   name:'create profile',
   meta:{ requiresAuth: true }
   },
+  {
+    path:'/profile',
+    component:()=>import('src/pages/ProfilePage.vue'),
+    name:'profile',
+    meta:{ requiresAuth: true }
+    },
 
 
 

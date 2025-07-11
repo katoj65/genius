@@ -80,9 +80,6 @@ console.log(error);
 {{ row.user.email }}
 </q-item-label>
 </q-item-section>
-<!-- <q-item-section side top>
-1 min ago
-</q-item-section> -->
 </q-item>
 </q-list>
 
@@ -93,11 +90,6 @@ console.log(error);
 <div style="margin-bottom:10px;">
 <q-select :options="['male','female']" label="Gender" dense="dense" style="padding:0px" outlined v-model="form.gender"/>
 </div>
-
-<!--
-<div style="margin-bottom:10px;">
-<q-input  dense="dense" outlined  placeholder="Date of birth" style="padding:0px" type="date"/>
-</div> -->
 
 <div style="margin-bottom:10px;">
 <q-select :options="row.class" label="Class" dense="dense" style="padding:0px" outlined v-model="form.class"/>

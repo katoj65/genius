@@ -1,7 +1,7 @@
 <template>
-<div style="color:red;text-align:left;padding:5px;">
+<span style="color:red;text-align:left;padding:5px;">
 {{ props.error }}
-</div>
+</span>
 </template>
 <script setup>
 const props=defineProps({
