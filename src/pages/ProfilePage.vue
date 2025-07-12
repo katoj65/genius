@@ -133,7 +133,7 @@ console.log(error);
 
 
 <q-item>
-  <q-item-section avatar>
+  <q-item-section avatar top>
     <q-icon name="auto_stories" />
   </q-item-section>
   <q-item-section>Subjects available</q-item-section>
@@ -142,6 +142,12 @@ console.log(error);
   </q-item-section>
 </q-item>
 <q-separator spaced />
+
+
+
+
+
+
 
 
 

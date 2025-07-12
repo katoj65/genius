@@ -2,13 +2,21 @@
 <app-layout :title="user.gender=='none'?'Create profile':'ReadApp'">
 <create-profile :user="user" v-if="user.class=='none'"></create-profile>
 <div v-else>
+
+<skeleton-component v-if="isLoading==true" />
+<div v-else>
 <q-card class="my-card" flat>
 <q-card-section horizontal>
 <q-card-section class="q-pt-xs">
 <!-- <div class="text-overline">Overline</div> -->
-<div class="text-h5 q-mt-sm q-mb-xs" style="font-weight:bold;font-size:17px;">S.4 Class</div>
+<div class="text-h5 q-mt-sm q-mb-xs" style="font-weight:bold;font-size:17px;">
+{{ row.my_class.name }} - {{ row.my_class.short_hand }}
+</div>
 <div class="text-caption" style="font-size:14px;">
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+{{ row.my_class.description }}
+
+
 </div>
 </q-card-section>
 
@@ -19,19 +27,20 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 
 </q-card>
-<q-item v-for="(s,key) in 30" :key="key" style="border:solid thin #e5e8e8;padding-top:15px;margin:10px;" class="border-radius" clickable v-ripple>
-
+<q-item v-for="(s,key) in row.subjects" :key="key" style="border:solid thin #e5e8e8;padding-top:15px;margin:10px;" class="border-radius" clickable v-ripple @click="router.push('/subject/show/'+s.id)">
 <q-item-section top>
 <q-item-label lines="1">
-<span class="text-weight-medium" style="font-size:17px;">Biology </span>
-<span class="text-grey-8"> - paper 3 </span>
+<span class="text-weight-medium" style="font-size:17px;">
+{{ s.name }}
+</span>
+<span class="text-grey-8"> - {{ s.short_hand }} </span>
 </q-item-label>
 <q-item-label caption lines="1" style="font-size:14px;color:black;">
-Photosynthesis is the process by which green
+{{ s.description }}
 </q-item-label>
-<q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary text-capitalize">
+<!-- <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary text-capitalize">
 <span class="cursor-pointer" style="color:silver;">Open in GitHub</span>
-</q-item-label>
+</q-item-label> -->
 </q-item-section>
 
 <q-item-section top side>
@@ -42,6 +51,15 @@ Photosynthesis is the process by which green
 </div>
 </q-item-section>
 </q-item>
+</div>
+
+
+
+
+
+
+
+
 <q-page-sticky position="bottom-right" :offset="[18, 18]">
 <q-fab color="black" direction="up" position="bottom-right">
 <template v-slot:icon="{ opened }">
@@ -54,6 +72,9 @@ Photosynthesis is the process by which green
 <q-fab-action color="dark" external-label @click="router.push('/ask')" icon="question_mark"/>
 </q-fab>
 </q-page-sticky>
+
+
+
 </div>
 
 </app-layout>
@@ -63,15 +84,57 @@ Photosynthesis is the process by which green
 import AppLayout from 'src/layouts/AppLayout.vue';
 import { useRouter } from 'vue-router';
 import { LocalStorage } from 'quasar';
-import { onMounted,ref } from 'vue';
+import { onMounted,ref,reactive } from 'vue';
 import CreateProfile from 'src/components/CreateProfile.vue';
+import database from 'src/boot/database';
+import SkeletonComponent from 'src/components/SkeletonComponent.vue';
 
+
+
+
+
+
+
+const row=reactive({
+my_class:{},
+subjects:[]
+});
 
 const user=ref({});
 const router =useRouter();
+const isLoading=ref(false);
+
 onMounted(async () => {
+isLoading.value=true;
 const session = await LocalStorage.getItem('user');
 user.value=session;
+// get user class details
+const {data, error}= await database.
+from('class')
+.select('*')
+.eq('id',session.class);
+if(error==null){
+data.forEach(element => {
+row.my_class=element;
+});
+
+//get subjects
+const subjects=await database.from('subject').select('*').eq('class_id',row.my_class.id);
+if(subjects.error==null){
+isLoading.value=false;
+row.subjects=subjects.data;
+}else{
+console.log(subjects.error);
+}
+}else{
+console.log(error);
+}
+
+
+
+
+
+
 
 
 });
