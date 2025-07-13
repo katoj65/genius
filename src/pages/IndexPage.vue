@@ -4,7 +4,7 @@
 <div v-else>
 
 <skeleton-component v-if="isLoading==true" />
-<div v-else>
+<div v-else style="padding-bottom:70px;">
 <q-card class="my-card" flat>
 <q-card-section horizontal>
 <q-card-section class="q-pt-xs">
@@ -13,48 +13,41 @@
 {{ row.my_class.name }} - {{ row.my_class.short_hand }}
 </div>
 <div class="text-caption" style="font-size:14px;">
-
 {{ row.my_class.description }}
-
-
 </div>
 </q-card-section>
-
 <q-card-section class="col-3 flex flex-center">
-<q-icon name="auto_stories" color="grey" size="4rem" />
+<q-icon name="auto_stories" color="grey" size="3rem" />
 </q-card-section>
 </q-card-section>
-
-
 </q-card>
-<q-item v-for="(s,key) in row.subjects" :key="key" style="border:solid thin #e5e8e8;padding-top:15px;margin:10px;" class="border-radius" clickable v-ripple @click="router.push('/subject/show/'+s.id)">
+
+
+
+
+
+<q-item v-for="(s,key) in row.subjects" :key="key" style="border-top:solid thin #e5e8e8;padding-top:10px;padding-bottom:10px;" clickable v-ripple @click="router.push('/subject/show/'+s.id)">
 <q-item-section top>
 <q-item-label lines="1">
-<span class="text-weight-medium" style="font-size:17px;">
+<span class="text-weight-medium" style="font-size:16px;">
 {{ s.name }}
 </span>
 <span class="text-grey-8"> - {{ s.short_hand }} </span>
 </q-item-label>
-<q-item-label caption lines="1" style="font-size:14px;color:black;">
+<q-item-label caption lines="1" style="font-size:14px;">
 {{ s.description }}
 </q-item-label>
-<!-- <q-item-label lines="1" class="q-mt-xs text-body2 text-weight-bold text-primary text-capitalize">
-<span class="cursor-pointer" style="color:silver;">Open in GitHub</span>
-</q-item-label> -->
 </q-item-section>
-
-<q-item-section top side>
-<div class="text-grey-8 q-gutter-xs">
-<q-btn class="gt-xs" size="12px" flat dense round icon="delete" />
-<q-btn class="gt-xs" size="12px" flat dense round icon="done" />
-<q-btn size="12px" flat dense round icon="more_vert" />
-</div>
+<q-item-section side>
+  <q-icon name="keyboard_arrow_right" color="silver" />
 </q-item-section>
 </q-item>
+
+
+
+
+
 </div>
-
-
-
 
 
 
@@ -119,7 +112,8 @@ row.my_class=element;
 });
 
 //get subjects
-const subjects=await database.from('subject').select('*').eq('class_id',row.my_class.id);
+const subjects=await database.from('subject')
+.select('*').eq('class_id',row.my_class.id);
 if(subjects.error==null){
 isLoading.value=false;
 row.subjects=subjects.data;
